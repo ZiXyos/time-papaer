@@ -1,29 +1,35 @@
+
 #[derive(Debug)]
-pub struct Config {
-    pub mode: Mode,
-    pub is_active: bool,
-}
-
-#[derive(Debug, Default)]
-pub struct Lexer<'lt> {
-   pub input: &'lt str,
-   pub pos: usize
-}
-
-pub enum Token {
-    
-   Equal,
+pub enum Value {
+   
    KeyWord(String),
+   Bool(bool),
+   Integer(i32),
    EOF
 }
 
 #[derive(Debug)]
-pub enum Mode {
+pub struct Entry {
 
-   Hourly,
-   Min,
-   Daily,
-   Monthly,
-   Ambiant
+   pub key: String,
+   pub value: Value
 }
 
+#[derive(Debug)]
+pub struct Setting {
+
+   pub weather: bool,
+   pub time: bool,
+   pub ambiant: bool,
+   pub source: String,
+   pub sources: Vec<String>,
+   pub resize_mode: bool,
+   pub width: u32,
+   pub height: u32,
+}
+
+#[derive(Debug)]
+pub struct Parser<'lt> {
+
+   pub input: &'lt str
+}
