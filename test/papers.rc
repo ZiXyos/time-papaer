@@ -1,3 +1,3 @@
-mode=hourly
-source"./"
-
+weather=true
+my_token=my_value
+time=true

@@ -11,3 +11,4 @@ nom_locate = "4.1.0"
 wallpaper = "3.2.0"
 tokio = { version = "1", features = ["full"] }
 tokio-cron-scheduler = "*"
+chrono = "0.4"

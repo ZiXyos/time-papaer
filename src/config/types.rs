@@ -2,7 +2,8 @@
 #[derive(Debug)]
 pub enum Value {
    
-   KeyWord(String),
+   String(String),
+   Vec(Vec<String>),
    Bool(bool),
    Integer(i32),
    EOF
@@ -15,21 +16,21 @@ pub struct Entry {
    pub value: Value
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct Setting {
 
    pub weather: bool,
-   pub time: bool,
-   pub ambiant: bool,
-   pub source: String,
-   pub sources: Vec<String>,
-   pub resize_mode: bool,
-   pub width: u32,
-   pub height: u32,
 }
 
 #[derive(Debug)]
 pub struct Parser<'lt> {
 
-   pub input: &'lt str
+   pub input: &'lt str,
+   pub items: Vec<Item>,
+}
+
+#[derive(Debug)]
+pub struct Item {
+   pub token: String,
+   pub value: String
 }

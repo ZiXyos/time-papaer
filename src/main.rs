@@ -1,6 +1,7 @@
 use std::{env, path::Path};
-use back_time::{paper::types::Paper, config::types::Setting};
+use back_time::{paper::types::Paper, config::types::Setting, config::types::Parser};
 use wallpaper;
+
 
 #[tokio::main]
 async fn main() {
@@ -12,26 +13,25 @@ async fn main() {
 
         let path = Path::new(&args[1]);
         if path.exists() {
+            let input = path.to_str().unwrap_or("");
+            let mut parser = Parser {
+                input,
+                items: vec![]
+            };
+
+            parser.parse_input().await;
             println!("{}", &path.display());
         } else {
             println!("");
         }
     }
 
-    wallpaper::set_from_path("/Users/ktchoumh/dev/rust-projects/back-time/test/noon.jpg").unwrap();
+    wallpaper::set_from_path("/Users/ktchoumh/dev/rust-projects/back-time/test/night-shift.jpg").unwrap();
     println!("{:?}", wallpaper::get());
 
-    let setting = Setting {
+    /*let setting = Setting {
         weather: true,
-        time: true,
-        ambiant: true,
-        source: String::from("./"),
-        sources: Vec::from([String::from("./")]),
-        resize_mode: true,
-        width: 1920,
-        height: 1080,
     };
-
-    let runner =  Paper::new(setting);
-    runner.hourly_change(String::from("./")).await;
+*/
+   // let _runner = Paper::new(setting);
 }
