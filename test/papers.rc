@@ -1,3 +1,5 @@
 weather=true
 my_token=my_value
 time=true
+source="./noon.jpg"
+sources=["./noon.jpg", "morning.jpg", "./afternoon.jpg"]
