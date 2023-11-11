@@ -1,21 +1,14 @@
-use crate::config::types::{ Parser, Item };
+use crate::config::types::{Item, Parser};
 
 use nom::IResult;
 use tokio::fs::read_to_string;
 
-
 impl<'lt> Parser<'lt> {
-    
     pub async fn parse_input(&mut self) {
-        
         self.read_line().await;
     }
 
-    fn get_item<'a>(
-        &'a mut self,
-        input: &'a str
-    ) -> IResult<&'a str, Item> {
-        
+    fn get_item<'a>(&'a mut self, input: &'a str) -> IResult<&'a str, Item> {
         let delimiter_pos = input.find("=");
         match delimiter_pos {
             Some(pos) => {
@@ -24,22 +17,23 @@ impl<'lt> Parser<'lt> {
 
                 Ok((
                     &input[input.len()..],
-
                     Item {
                         token: token.trim().to_string(),
-                        value: value.trim().to_string()
-                    }
+                        value: value.trim().to_string(),
+                    },
                 ))
             }
             None => {
                 println!("Parsing Error: Delimiter (=) not found");
-                Err(nom::Err::Error(nom::error::Error::new(input, nom::error::ErrorKind::Tag)))
+                Err(nom::Err::Error(nom::error::Error::new(
+                    input,
+                    nom::error::ErrorKind::Tag,
+                )))
             }
         }
     }
 
     async fn read_line(&mut self) {
-
         let input_string = read_to_string(self.input).await.unwrap();
         let mut tmp_item = Vec::new();
 
@@ -47,8 +41,10 @@ impl<'lt> Parser<'lt> {
             let owned_line = line.to_owned();
             let val = self.get_item(&owned_line);
             match val {
-                Ok(l) => { tmp_item.push(l.1)}
-                Err(e) => { panic!("{}", e); }
+                Ok(l) => tmp_item.push(l.1),
+                Err(e) => {
+                    panic!("WOOOWWWW {}", e);
+                }
             }
         }
 
